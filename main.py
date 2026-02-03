@@ -1,4 +1,4 @@
-# app.py ── LA LANGUE D'INTERNET ── Version finale complète ── février 2026
+# app.py ── LA LANGUE D'INTERNET ── Version corrigée complète ── février 2026
 
 import streamlit as st
 import json
@@ -8,7 +8,7 @@ from datetime import datetime
 import random
 
 # =============================================================================
-# CONFIGURATION GLOBALE
+# FICHIER DE DONNÉES
 # =============================================================================
 DATA_FILE = "langue_internet.json"
 
@@ -35,10 +35,6 @@ if "words" not in st.session_state:
     st.session_state.words = words
 if "last_sync" not in st.session_state:
     st.session_state.last_sync = time.time()
-if "edit_idx" not in st.session_state:
-    st.session_state.edit_idx = None
-if "delete_idx" not in st.session_state:
-    st.session_state.delete_idx = None
 
 # =============================================================================
 # STYLE TIKTOK / MODERNE
@@ -47,77 +43,67 @@ st.set_page_config(page_title="🌐 La Langue d'Internet", page_icon="🌐", lay
 
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700;900&display=swap');
-    
-    .stApp { background: #000; color: white; }
     .titre { 
-        font-family: 'Bebas Neue', sans-serif;
-        font-size: 5rem; 
-        background: linear-gradient(90deg, #fe2c55, #25f4ee, #a033ff, #fe2c55);
-        background-size: 300%;
+        font-size: 4.5rem; 
+        font-weight: 900;
+        background: linear-gradient(90deg, #fe2c55, #25f4ee, #a033ff);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
         margin: 1.5rem 0 2rem;
-        animation: gradient 8s ease infinite;
+        text-shadow: 0 0 20px rgba(254,44,85,0.6);
     }
-    @keyframes gradient { 0% {background-position:0% 50%} 50% {background-position:100% 50%} 100% {background-position:0% 50%} }
-    
     .card {
         background: rgba(20,20,40,0.92);
         border-radius: 20px;
-        padding: 1.8rem;
+        padding: 1.6rem;
         margin: 1.2rem auto;
-        max-width: 680px;
-        border: 1px solid #25f4ee44;
-        box-shadow: 0 12px 40px rgba(37,244,238,0.18);
-        backdrop-filter: blur(12px);
+        max-width: 700px;
+        border: 1px solid #25f4ee55;
+        box-shadow: 0 10px 30px rgba(37,244,238,0.2);
+        backdrop-filter: blur(8px);
     }
-    .emoji-big { font-size: 5.5rem; text-align: center; margin: 0.5rem 0; filter: drop-shadow(0 0 15px #00f2ea); }
-    .mot-titre { font-size: 2.8rem; font-weight: 900; text-align: center; color: #25f4ee; margin: 0.4rem 0; }
-    .definition { font-size: 1.25rem; text-align: center; line-height: 1.6; color: #e0e0ff; margin: 1rem 0; }
-    .tag { background: #fe2c55; color: white; padding: 0.35rem 0.9rem; border-radius: 30px; font-size: 0.85rem; margin: 0.3rem 0.2rem; display: inline-block; }
-    .author { text-align: center; color: #aaa; font-size: 0.95rem; margin-top: 1rem; }
-    .btn { border-radius: 50px !important; font-weight: bold !important; }
-    .btn-primary { background: linear-gradient(90deg, #fe2c55, #a033ff) !important; }
-    .btn-ia { background: linear-gradient(90deg, #833ab4, #25f4ee) !important; color: white !important; }
+    .emoji-big { font-size: 5rem; text-align: center; margin: 0.5rem 0; }
+    .mot { font-size: 2.6rem; font-weight: 900; text-align: center; color: #25f4ee; }
+    .def { font-size: 1.2rem; text-align: center; color: #e0e0ff; margin: 1rem 0; }
+    .tag { background: #fe2c55; color: white; padding: 0.4rem 1rem; border-radius: 30px; font-size: 0.9rem; margin: 0.3rem; display: inline-block; }
+    .author { text-align: center; color: #bbb; font-size: 0.95rem; margin-top: 1rem; }
 </style>
 """, unsafe_allow_html=True)
 
 st.markdown('<div class="titre">🌐 LA LANGUE D\'INTERNET</div>', unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; color:#ccc; font-size:1.3rem; margin-bottom:2rem;'>Crée, partage et traduis la langue du futur avec tes potes 🔥</p>", unsafe_allow_html=True)
 
 # =============================================================================
 # CONNEXION / INSCRIPTION
 # =============================================================================
 if not st.session_state.user:
-    tab1, tab2 = st.tabs(["Connexion", "Inscription"])
-    
-    with tab1:
+    tab_conn, tab_insc = st.tabs(["Connexion", "Inscription"])
+
+    with tab_conn:
         st.subheader("Connexion")
-        login_user = st.text_input("Pseudo", key="l_user")
-        login_pass = st.text_input("Mot de passe", type="password", key="l_pass")
+        l_user = st.text_input("Pseudo", key="login_user")
+        l_pass = st.text_input("Mot de passe", type="password", key="login_pass")
         if st.button("Se connecter", type="primary", use_container_width=True):
-            if login_user in users and users[login_user]["password"] == login_pass:
-                st.session_state.user = login_user
-                st.success(f"Bienvenue {login_user} ! 🌟")
+            if l_user in users and users[l_user]["password"] == l_pass:
+                st.session_state.user = l_user
+                st.success(f"Bienvenue {l_user} ! 🌟")
                 st.rerun()
             else:
-                st.error("Pseudo ou mot de passe incorrect")
-    
-    with tab2:
+                st.error("Identifiants incorrects")
+
+    with tab_insc:
         st.subheader("Inscription")
-        new_user = st.text_input("Pseudo", key="n_user")
-        new_pass = st.text_input("Mot de passe", type="password", key="n_pass")
-        if st.button("Créer mon compte", type="primary", use_container_width=True):
-            if new_user in users:
-                st.error("Ce pseudo est déjà pris")
-            elif len(new_user) < 3:
-                st.error("Pseudo trop court (≥ 3 caractères)")
+        n_user = st.text_input("Pseudo", key="new_user")
+        n_pass = st.text_input("Mot de passe", type="password", key="new_pass")
+        if st.button("Créer compte", type="primary", use_container_width=True):
+            if n_user in users:
+                st.error("Pseudo déjà utilisé")
+            elif len(n_user) < 3:
+                st.error("Pseudo trop court (min 3 caractères)")
             else:
-                users[new_user] = {"password": new_pass}
+                users[n_user] = {"password": n_pass}
                 save_data({"users": users, "words": st.session_state.words})
-                st.success("Compte créé ! Connecte-toi maintenant")
+                st.success("Compte créé ! Connecte-toi")
                 st.rerun()
     st.stop()
 
@@ -127,44 +113,44 @@ if not st.session_state.user:
 st.subheader("Créer un nouveau mot")
 
 with st.form("add_word_form", clear_on_submit=True):
-    col1, col2 = st.columns([3,1])
-    mot = col1.text_input("Le mot", placeholder="vibemax, glowvibe, zoomspark...")
-    symbole = col2.text_input("Emoji", placeholder="🔥 ✨ 💫")
+    col_mot, col_emo = st.columns([3, 1])
+    mot = col_mot.text_input("Le mot", placeholder="vibemax, glowvibe...")
+    symbole = col_emo.text_input("Emoji", placeholder="🔥 ✨")
 
     definition = st.text_area("Définition", height=110,
-                             placeholder="Une énergie cosmique qui te fait briller en soirée...")
+                             placeholder="Une énergie qui fait briller toute la soirée...")
 
-    col_ia1, col_ia2 = st.columns([4,1])
-    if col_ia2.button("✨ IA : rendre plus beau", type="secondary"):
+    # Bouton IA (submit pour déclencher suggestion)
+    if st.form_submit_button("✨ IA : rendre plus beau", help="Génère une version stylée"):
+        # Simulation IA (tu peux remplacer par vrai appel API)
         suggestions = [
-            "Une vibe qui explose les pixels et fait danser les cœurs.",
-            "État ultime où tu deviens la star de tous les écrans.",
-            "L'énergie pure qui transforme la nuit en feu d'artifice digital.",
-            "Quand ton aura devient si forte que même les stories tremblent."
+            "Une vibe qui explose les écrans et fait danser les cœurs.",
+            "État ultime où tu deviens la star absolue du feed.",
+            "L'énergie pure qui transforme la nuit en feu digital."
         ]
         st.session_state.ia_suggest = random.choice(suggestions)
 
     if "ia_suggest" in st.session_state:
-        st.info(f"**Suggestion IA** : {st.session_state.ia_suggest}")
+        st.info(f"**IA suggère** : {st.session_state.ia_suggest}")
         if st.button("Utiliser cette version"):
             definition = st.session_state.ia_suggest
             del st.session_state.ia_suggest
 
+    # Bouton principal d'enregistrement (OBLIGATOIRE dans le form)
     if st.form_submit_button("Poster mon mot ! 🚀", type="primary", use_container_width=True):
         if mot.strip() and definition.strip():
             cat = "Poétique"
-            lower_def = definition.lower()
-            if any(w in lower_def for w in ["sexe", "bite", "cul", "fuck", "merde", "pute"]):
+            lower = definition.lower()
+            if any(w in lower for w in ["sexe", "bite", "cul", "fuck", "merde"]):
                 cat = "Vulgaire"
-            elif any(w in lower_def for w in ["love", "cœur", "amour", "douceur", "tendre"]):
+            elif any(w in lower for w in ["love", "amour", "cœur"]):
                 cat = "Romantique"
-            elif any(w in lower_def for w in ["code", "bug", "hack", "python", "dev", "algo"]):
+            elif any(w in lower for w in ["code", "bug", "python", "hack"]):
                 cat = "Geek"
 
             nouveau = {
-                "id": len(st.session_state.words) + 1,
                 "word": mot.strip(),
-                "symbol": symbole.strip() or random.choice(["🔥","✨","💫","🦄","😎"]),
+                "symbol": symbole.strip() or "🌟",
                 "definition": definition.strip(),
                 "author": st.session_state.user,
                 "category": cat,
@@ -173,37 +159,31 @@ with st.form("add_word_form", clear_on_submit=True):
             st.session_state.words.append(nouveau)
             save_data({"users": users, "words": st.session_state.words})
             st.balloons()
-            st.success(f"Posté ! **{mot.strip()}** est dans le feed 🔥")
+            st.success(f"Posté ! **{mot.strip()}** est live 🔥")
             st.rerun()
 
 # =============================================================================
 # RECHERCHE + TRADUCTEUR
 # =============================================================================
 st.subheader("Rechercher ou traduire")
-col_r, col_t = st.columns(2)
+col_r, col_tr = st.columns(2)
+recherche = col_r.text_input("🔍 Chercher un mot / phrase")
+phrase = col_tr.text_input("Traduire une phrase → Langue Internet")
 
-with col_r:
-    recherche = st.text_input("🔍 Chercher un mot ou une phrase")
-
-with col_t:
-    phrase_a_traduire = st.text_input("Traduire une phrase → La Langue d'Internet")
-
-if phrase_a_traduire:
-    # Traduction fun et créative
-    mots = phrase_a_traduire.split()
-    trad = " ".join([f"{m.upper()}💥" if random.random() > 0.5 else f"{m}✨" for m in mots])
-    trad += random.choice([" 🔥 MAX VIBE", " 🌌 ULTRA GLOW", " 💫 COSMIC FLOW"])
+if phrase:
+    # Traduction fun
+    trad = phrase.upper().replace(" ", " 💥 ").replace("JE", "MOI").replace("TU", "TOI") + " VIBE MAX 🔥"
     st.success(f"**Traduction** : {trad}")
 
 # =============================================================================
-# FEED TIKTOK (cartes verticales)
+# FEED (cartes TikTok)
 # =============================================================================
 filtered = st.session_state.words
 if recherche:
-    recherche_lower = recherche.lower()
-    filtered = [w for w in filtered if recherche_lower in w["word"].lower() or recherche_lower in w["definition"].lower()]
+    lower = recherche.lower()
+    filtered = [w for w in filtered if lower in w["word"].lower() or lower in w["definition"].lower()]
 
-st.markdown("### Le Feed des Légendes ↓↓↓")
+st.markdown("### Feed des potes ↓↓↓")
 
 delete_idx = None
 edit_idx = None
@@ -213,8 +193,8 @@ for i, w in enumerate(filtered[::-1]):  # récent en haut
         st.markdown('<div class="card">', unsafe_allow_html=True)
         
         st.markdown(f'<div class="emoji-big">{w["symbol"]}</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="mot-titre">{w["word"]}</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="definition">{w["definition"]}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="mot">{w["word"]}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="def">{w["definition"]}</div>', unsafe_allow_html=True)
         
         col1, col2 = st.columns([2,1])
         col1.markdown(f'<span class="tag">{w["category"]}</span>', unsafe_allow_html=True)
@@ -229,7 +209,7 @@ for i, w in enumerate(filtered[::-1]):  # récent en haut
         
         st.markdown('</div>', unsafe_allow_html=True)
 
-# Actions sécurisées
+# Actions après boucle
 if delete_idx is not None:
     del st.session_state.words[delete_idx]
     save_data({"users": users, "words": st.session_state.words})
@@ -240,7 +220,7 @@ if edit_idx is not None:
     st.rerun()
 
 # =============================================================================
-# SYNCHRONISATION AUTO + BOUTON
+# SYNCHRO AUTO
 # =============================================================================
 if time.time() - st.session_state.last_sync > 8:
     new_data = load_data()
@@ -248,13 +228,4 @@ if time.time() - st.session_state.last_sync > 8:
     st.session_state.last_sync = time.time()
     st.rerun()
 
-col_sync, col_user = st.columns([3,1])
-with col_sync:
-    if st.button("Rafraîchir maintenant 🔄"):
-        st.session_state.words = load_data().get("words", [])
-        st.session_state.last_sync = time.time()
-        st.rerun()
-with col_user:
-    st.caption(f"Connecté : {st.session_state.user}")
-
-st.caption(f"{len(st.session_state.words)} mots dans la langue • Mis à jour à {time.strftime('%H:%M:%S')}")
+st.caption(f"Connecté : {st.session_state.user} • {len(st.session_state.words)} mots • Synchro auto 8s")
