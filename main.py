@@ -1,4 +1,4 @@
-# app.py ── LA LANGUE D'INTERNET ── Version corrigée complète ── février 2026
+# app.py ── LA LANGUE D'INTERNET ── Version corrigée & finale ── février 2026
 
 import streamlit as st
 import json
@@ -37,37 +37,35 @@ if "last_sync" not in st.session_state:
     st.session_state.last_sync = time.time()
 
 # =============================================================================
-# STYLE TIKTOK / MODERNE
+# STYLE TIKTOK
 # =============================================================================
 st.set_page_config(page_title="🌐 La Langue d'Internet", page_icon="🌐", layout="wide")
 
 st.markdown("""
 <style>
-    .titre { 
-        font-size: 4.5rem; 
+    .titre {
+        font-size: 4.2rem;
         font-weight: 900;
         background: linear-gradient(90deg, #fe2c55, #25f4ee, #a033ff);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
         margin: 1.5rem 0 2rem;
-        text-shadow: 0 0 20px rgba(254,44,85,0.6);
     }
     .card {
-        background: rgba(20,20,40,0.92);
-        border-radius: 20px;
-        padding: 1.6rem;
+        background: rgba(20,20,40,0.9);
+        border-radius: 18px;
+        padding: 1.5rem;
         margin: 1.2rem auto;
-        max-width: 700px;
+        max-width: 680px;
         border: 1px solid #25f4ee55;
-        box-shadow: 0 10px 30px rgba(37,244,238,0.2);
-        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 25px rgba(37,244,238,0.15);
     }
-    .emoji-big { font-size: 5rem; text-align: center; margin: 0.5rem 0; }
-    .mot { font-size: 2.6rem; font-weight: 900; text-align: center; color: #25f4ee; }
-    .def { font-size: 1.2rem; text-align: center; color: #e0e0ff; margin: 1rem 0; }
-    .tag { background: #fe2c55; color: white; padding: 0.4rem 1rem; border-radius: 30px; font-size: 0.9rem; margin: 0.3rem; display: inline-block; }
-    .author { text-align: center; color: #bbb; font-size: 0.95rem; margin-top: 1rem; }
+    .emoji-big { font-size: 4.8rem; text-align: center; margin: 0.4rem 0; }
+    .mot { font-size: 2.4rem; font-weight: 900; text-align: center; color: #25f4ee; margin: 0.4rem 0; }
+    .def { font-size: 1.18rem; text-align: center; color: #e0e0ff; line-height: 1.5; margin: 0.8rem 0; }
+    .tag { background: #fe2c55; color: white; padding: 0.35rem 0.9rem; border-radius: 30px; font-size: 0.85rem; margin: 0.3rem 0.2rem; display: inline-block; }
+    .author { text-align: center; color: #aaa; font-size: 0.95rem; margin-top: 1rem; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -97,9 +95,9 @@ if not st.session_state.user:
         n_pass = st.text_input("Mot de passe", type="password", key="new_pass")
         if st.button("Créer compte", type="primary", use_container_width=True):
             if n_user in users:
-                st.error("Pseudo déjà utilisé")
+                st.error("Pseudo déjà pris")
             elif len(n_user) < 3:
-                st.error("Pseudo trop court (min 3 caractères)")
+                st.error("Pseudo trop court")
             else:
                 users[n_user] = {"password": n_pass}
                 save_data({"users": users, "words": st.session_state.words})
@@ -120,11 +118,10 @@ with st.form("add_word_form", clear_on_submit=True):
     definition = st.text_area("Définition", height=110,
                              placeholder="Une énergie qui fait briller toute la soirée...")
 
-    # Bouton IA (submit pour déclencher suggestion)
-    if st.form_submit_button("✨ IA : rendre plus beau", help="Génère une version stylée"):
-        # Simulation IA (tu peux remplacer par vrai appel API)
+    # Bouton IA (submit)
+    if st.form_submit_button("✨ IA : rendre plus beau", help="Rendre la définition plus stylée"):
         suggestions = [
-            "Une vibe qui explose les écrans et fait danser les cœurs.",
+            "Une vibe qui explose les pixels et fait danser les cœurs.",
             "État ultime où tu deviens la star absolue du feed.",
             "L'énergie pure qui transforme la nuit en feu digital."
         ]
@@ -136,16 +133,16 @@ with st.form("add_word_form", clear_on_submit=True):
             definition = st.session_state.ia_suggest
             del st.session_state.ia_suggest
 
-    # Bouton principal d'enregistrement (OBLIGATOIRE dans le form)
+    # Bouton principal (submit)
     if st.form_submit_button("Poster mon mot ! 🚀", type="primary", use_container_width=True):
         if mot.strip() and definition.strip():
             cat = "Poétique"
-            lower = definition.lower()
-            if any(w in lower for w in ["sexe", "bite", "cul", "fuck", "merde"]):
+            lower_def = definition.lower()
+            if any(w in lower_def for w in ["sexe", "bite", "cul", "fuck", "merde"]):
                 cat = "Vulgaire"
-            elif any(w in lower for w in ["love", "amour", "cœur"]):
+            elif any(w in lower_def for w in ["love", "amour", "cœur"]):
                 cat = "Romantique"
-            elif any(w in lower for w in ["code", "bug", "python", "hack"]):
+            elif any(w in lower_def for w in ["code", "bug", "python", "hack"]):
                 cat = "Geek"
 
             nouveau = {
@@ -159,7 +156,7 @@ with st.form("add_word_form", clear_on_submit=True):
             st.session_state.words.append(nouveau)
             save_data({"users": users, "words": st.session_state.words})
             st.balloons()
-            st.success(f"Posté ! **{mot.strip()}** est live 🔥")
+            st.success(f"Posté ! **{mot.strip()}** est dans le feed 🔥")
             st.rerun()
 
 # =============================================================================
@@ -171,12 +168,11 @@ recherche = col_r.text_input("🔍 Chercher un mot / phrase")
 phrase = col_tr.text_input("Traduire une phrase → Langue Internet")
 
 if phrase:
-    # Traduction fun
     trad = phrase.upper().replace(" ", " 💥 ").replace("JE", "MOI").replace("TU", "TOI") + " VIBE MAX 🔥"
     st.success(f"**Traduction** : {trad}")
 
 # =============================================================================
-# FEED (cartes TikTok)
+# FEED TIKTOK
 # =============================================================================
 filtered = st.session_state.words
 if recherche:
@@ -188,7 +184,7 @@ st.markdown("### Feed des potes ↓↓↓")
 delete_idx = None
 edit_idx = None
 
-for i, w in enumerate(filtered[::-1]):  # récent en haut
+for i, w in enumerate(filtered[::-1]):
     with st.container():
         st.markdown('<div class="card">', unsafe_allow_html=True)
         
@@ -209,7 +205,7 @@ for i, w in enumerate(filtered[::-1]):  # récent en haut
         
         st.markdown('</div>', unsafe_allow_html=True)
 
-# Actions après boucle
+# Actions après boucle (anti-bug)
 if delete_idx is not None:
     del st.session_state.words[delete_idx]
     save_data({"users": users, "words": st.session_state.words})
@@ -228,4 +224,13 @@ if time.time() - st.session_state.last_sync > 8:
     st.session_state.last_sync = time.time()
     st.rerun()
 
-st.caption(f"Connecté : {st.session_state.user} • {len(st.session_state.words)} mots • Synchro auto 8s")
+col_sync, col_user = st.columns([3,1])
+with col_sync:
+    if st.button("Rafraîchir maintenant 🔄"):
+        st.session_state.words = load_data().get("words", [])
+        st.session_state.last_sync = time.time()
+        st.rerun()
+with col_user:
+    st.caption(f"Connecté : {st.session_state.user}")
+
+st.caption(f"{len(st.session_state.words)} mots • Mis à jour à {time.strftime('%H:%M:%S')}")
