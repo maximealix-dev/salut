@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐 LA LANGUE D'INTERNET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Righteous&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #121212;
+            --bg-card: #1a1a1a;
+            --tiktok-pink: #fe2c55;
+            --tiktok-cyan: #25f4ee;
+            --tiktok-blue: #00f2ea;
+            --tiktok-purple: #a033ff;
+            --accent-yellow: #ffd700;
+            --text-primary: #ffffff;
+            --text-secondary: #b4b4b4;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* TikTok animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(254, 44, 85, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(37, 244, 238, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(160, 51, 255, 0.05) 0%, transparent 50%);
+            animation: bgShift 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translate(30px, 30px) scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        /* Glitch effect */
+        @keyframes glitch {
+            0% {
+                text-shadow: 2px 2px var(--tiktok-cyan), -2px -2px var(--tiktok-pink);
+            }
+            25% {
+                text-shadow: -2px 2px var(--tiktok-pink), 2px -2px var(--tiktok-cyan);
+            }
+            50% {
+                text-shadow: 2px -2px var(--tiktok-cyan), -2px 2px var(--tiktok-pink);
+            }
+            75% {
+                text-shadow: -2px -2px var(--tiktok-pink), 2px 2px var(--tiktok-cyan);
+            }
+            100% {
+                text-shadow: 2px 2px var(--tiktok-cyan), -2px -2px var(--tiktok-pink);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 3rem 0 2rem;
+            text-align: center;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--tiktok-cyan), var(--tiktok-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            animation: glitch 2s ease-in-out infinite;
+            position: relative;
+        }
+
+        h1::before {
+            content: '🌐 LA LANGUE D\'INTERNET';
+            position: absolute;
+            top: 0;
+            left: 2px;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--tiktok-pink), var(--tiktok-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.5;
+            z-index: -1;
+            animation: glitch 3s ease-in-out infinite reverse;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 2.5rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Auth Section */
+        .auth-section {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .auth-container {
+            background: var(--bg-card);
+            border: 2px solid var(--tiktok-cyan);
+            border-radius: 25px;
+            padding: 1.8rem 2.2rem;
+            box-shadow: 0 8px 32px rgba(37, 244, 238, 0.2);
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"], input[type="password"] {
+            background: var(--bg-secondary);
+            border: 2px solid var(--tiktok-cyan);
+            color: var(--text-primary);
+            padding: 0.9rem 1.2rem;
+            border-radius: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            min-width: 200px;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: var(--tiktok-pink);
+            box-shadow: 0 0 20px rgba(254, 44, 85, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            background: #1f1f1f;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--tiktok-pink), var(--tiktok-purple));
+            border: none;
+            color: white;
+            padding: 0.9rem 1.8rem;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-transform: none;
+            letter-spacing: 0.02em;
+            box-shadow: 0 4px 15px rgba(254, 44, 85, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 10px 30px rgba(254, 44, 85, 0.6);
+            background: linear-gradient(135deg, var(--tiktok-cyan), var(--tiktok-blue));
+        }
+
+        button:active {
+            transform: translateY(-2px) scale(1.03);
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .username {
+            color: var(--tiktok-cyan);
+            font-weight: 700;
+        }
+
+        /* Translator */
+        .translator {
+            background: linear-gradient(135deg, rgba(254, 44, 85, 0.1), rgba(37, 244, 238, 0.1));
+            border: 3px solid var(--tiktok-pink);
+            border-radius: 30px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 12px 40px rgba(254, 44, 85, 0.3);
+            animation: fadeIn 1s ease-out 0.6s backwards, float 6s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .translator::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 244, 238, 0.1) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .translator h2 {
+            font-family: 'Righteous', sans-serif;
+            color: var(--tiktok-pink);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .translator-input {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 2px solid var(--tiktok-cyan);
+            color: var(--text-primary);
+            padding: 1.2rem;
+            border-radius: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            min-height: 100px;
+            resize: vertical;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .translator-input:focus {
+            outline: none;
+            border-color: var(--tiktok-pink);
+            box-shadow: 0 0 25px rgba(254, 44, 85, 0.4);
+            transform: scale(1.01);
+        }
+
+        .translator-output {
+            width: 100%;
+            background: rgba(37, 244, 238, 0.1);
+            border: 3px solid var(--tiktok-cyan);
+            color: var(--tiktok-cyan);
+            padding: 1.8rem;
+            border-radius: 20px;
+            font-family: 'Righteous', sans-serif;
+            font-size: 1.3rem;
+            min-height: 100px;
+            margin-top: 1rem;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+            text-shadow: 0 0 10px rgba(37, 244, 238, 0.5);
+        }
+
+        /* Word Management */
+        .word-management {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease-out 0.9s backwards;
+        }
+
+        .add-word-section {
+            background: var(--bg-card);
+            border: 2px solid var(--tiktok-pink);
+            border-radius: 30px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(254, 44, 85, 0.2);
+        }
+
+        .add-word-section h2 {
+            font-family: 'Righteous', sans-serif;
+            color: var(--tiktok-pink);
+            margin-bottom: 1.8rem;
+            font-size: 1.8rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Virtual Board Style for Dictionary */
+        .words-list {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.95));
+            border: 3px solid var(--tiktok-cyan);
+            border-radius: 30px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 60px rgba(37, 244, 238, 0.3);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .words-list::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(37, 244, 238, 0.03) 50px, rgba(37, 244, 238, 0.03) 51px),
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(254, 44, 85, 0.03) 50px, rgba(254, 44, 85, 0.03) 51px);
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .words-list h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            background: linear-gradient(135deg, var(--tiktok-cyan), var(--tiktok-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.8rem;
+            font-size: 2.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dictionary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 2px solid var(--tiktok-cyan);
+            color: var(--text-primary);
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--tiktok-pink);
+            box-shadow: 0 0 25px rgba(254, 44, 85, 0.4);
+            transform: scale(1.02);
+        }
+
+        /* Virtual Board Grid */
+        #wordsList {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 968px) {
+            #wordsList {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .emoji-picker {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .emoji-btn {
+            background: var(--bg-secondary);
+            border: 2px solid var(--tiktok-cyan);
+            padding: 0.5rem 0.8rem;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .emoji-btn:hover {
+            background: var(--tiktok-cyan);
+            transform: scale(1.2);
+            box-shadow: 0 5px 20px rgba(37, 244, 238, 0.4);
+        }
+
+        /* Pixel Art Creator */
+        .pixel-creator {
+            background: var(--bg-secondary);
+            border: 2px solid var(--tiktok-pink);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .pixel-creator-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .pixel-creator-title {
+            font-family: 'Righteous', sans-serif;
+            color: var(--tiktok-pink);
+            font-size: 1.2rem;
+        }
+
+        .pixel-grid {
+            display: grid;
+            grid-template-columns: repeat(16, 1fr);
+            gap: 2px;
+            background: rgba(37, 244, 238, 0.1);
+            padding: 10px;
+            border-radius: 15px;
+            max-width: 400px;
+            margin: 0 auto 1rem;
+            box-shadow: 0 0 20px rgba(37, 244, 238, 0.2);
+        }
+
+        .pixel-cell {
+            aspect-ratio: 1;
+            background: var(--bg-primary);
+            border: 1px solid rgba(37, 244, 238, 0.2);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border-radius: 2px;
+        }
+
+        .pixel-cell:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(254, 44, 85, 0.5);
+        }
+
+        .pixel-cell.active {
+            background: var(--current-color);
+            border-color: var(--current-color);
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .color-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-btn:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .color-btn.selected {
+            border-color: white;
+            box-shadow: 0 0 20px currentColor;
+            transform: scale(1.15);
+        }
+
+        .pixel-controls {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pixel-preview {
+            width: 64px;
+            height: 64px;
+            margin: 1rem auto;
+            border: 2px solid var(--tiktok-cyan);
+            border-radius: 10px;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pixel-preview canvas {
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        .toggle-pixel-creator {
+            background: linear-gradient(135deg, var(--tiktok-purple), var(--tiktok-pink));
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 2px solid var(--tiktok-cyan);
+            color: var(--text-primary);
+            padding: 1rem;
+            border-radius: 18px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--tiktok-pink);
+            box-shadow: 0 0 20px rgba(254, 44, 85, 0.3);
+            transform: scale(1.01);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        /* Word Cards */
+        .word-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.8));
+            border: 2px solid var(--tiktok-cyan);
+            border-radius: 25px;
+            padding: 1.8rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .word-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 244, 238, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .word-card:hover::before {
+            left: 100%;
+        }
+
+        .word-card:hover {
+            border-color: var(--tiktok-pink);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(254, 44, 85, 0.4);
+        }
+
+        .word-symbol {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(37, 244, 238, 0.6));
+            animation: symbolFloat 3s ease-in-out infinite;
+            min-height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .word-symbol img {
+            width: 48px;
+            height: 48px;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        @keyframes symbolFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .word-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .word-title {
+            font-family: 'Righteous', sans-serif;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, var(--tiktok-cyan), var(--tiktok-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 400;
+            text-shadow: 0 0 20px rgba(37, 244, 238, 0.3);
+        }
+
+        .word-tag {
+            background: linear-gradient(135deg, var(--tiktok-pink), var(--tiktok-purple));
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 15px rgba(254, 44, 85, 0.4);
+        }
+
+        .word-definition {
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .word-synonyms {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .word-meta {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .word-author {
+            color: var(--tiktok-purple);
+            font-weight: 600;
+        }
+
+        .word-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            border-radius: 20px;
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #ff0066, #ff3399);
+        }
+
+        .btn-delete:hover {
+            background: linear-gradient(135deg, #ff3399, #ff0066);
+        }
+
+        .ai-suggestion {
+            background: linear-gradient(135deg, rgba(160, 51, 255, 0.15), rgba(37, 244, 238, 0.15));
+            border: 2px dashed var(--tiktok-purple);
+            border-radius: 20px;
+            padding: 1.3rem;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .ai-suggestion strong {
+            color: var(--tiktok-purple);
+            font-size: 1.1rem;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-secondary);
+            border: 2px solid var(--tiktok-cyan);
+            color: var(--text-primary);
+            padding: 0.7rem 1.3rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: 600;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, var(--tiktok-pink), var(--tiktok-purple));
+            color: white;
+            border-color: transparent;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 20px rgba(254, 44, 85, 0.5);
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 4px solid rgba(37, 244, 238, 0.3);
+            border-top-color: var(--tiktok-pink);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Hidden state */
+        .hidden {
+            display: none;
+        }
+
+        /* Stats section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease-out 1.2s backwards;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(254, 44, 85, 0.1), rgba(37, 244, 238, 0.1));
+            border: 2px solid var(--tiktok-cyan);
+            border-radius: 25px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(37, 244, 238, 0.2);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: var(--tiktok-pink);
+            box-shadow: 0 15px 50px rgba(254, 44, 85, 0.4);
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, var(--tiktok-cyan), var(--tiktok-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 2px solid rgba(37, 244, 238, 0.2);
+            margin-top: 4rem;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--tiktok-pink), var(--tiktok-cyan));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--tiktok-cyan), var(--tiktok-purple));
+            box-shadow: 0 0 10px rgba(254, 44, 85, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 LA LANGUE D'INTERNET</h1>
+            <p class="tagline">✨ Créez, partagez et traduisez la nouvelle langue du web ✨</p>
+        </header>
+
+        <!-- Authentication -->
+        <div class="auth-section">
+            <div class="auth-container" id="loginSection">
+                <div class="input-group">
+                    <input type="text" id="loginUsername" placeholder="Nom d'utilisateur">
+                    <input type="password" id="loginPassword" placeholder="Mot de passe">
+                    <button onclick="login()">Connexion</button>
+                    <button onclick="showRegister()">Créer un compte</button>
+                </div>
+            </div>
+            
+            <div class="auth-container hidden" id="registerSection">
+                <div class="input-group">
+                    <input type="text" id="registerUsername" placeholder="Nom d'utilisateur">
+                    <input type="password" id="registerPassword" placeholder="Mot de passe">
+                    <button onclick="register()">S'inscrire</button>
+                    <button onclick="showLogin()">Annuler</button>
+                </div>
+            </div>
+            
+            <div class="auth-container hidden" id="userSection">
+                <div class="user-info">
+                    <span>👤 Connecté en tant que <span class="username" id="currentUsername"></span></span>
+                    <button onclick="logout()">Déconnexion</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalWords">0</div>
+                <div class="stat-label">Mots créés</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalUsers">0</div>
+                <div class="stat-label">Contributeurs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalTranslations">0</div>
+                <div class="stat-label">Traductions</div>
+            </div>
+        </div>
+
+        <!-- Translator -->
+        <div class="translator">
+            <h2>✨ Traducteur Universel</h2>
+            <textarea class="translator-input" id="translatorInput" placeholder="Tapez votre phrase en français ou anglais..."></textarea>
+            <button onclick="translate()">Traduire vers la Langue d'Internet</button>
+            <div class="translator-output" id="translatorOutput">Votre traduction apparaîtra ici...</div>
+        </div>
+
+        <!-- Word Management -->
+        <div class="word-management">
+            <!-- Add Word Section -->
+            <div class="add-word-section">
+                <h2>➕ Ajouter un Mot</h2>
+                <div id="addWordForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Mot (Langue d'Internet)</label>
+                            <input type="text" id="newWord" placeholder="ex: cyberflux">
+                        </div>
+                        <div class="form-group">
+                            <label>Symbole / Emoji</label>
+                            <input type="text" id="newSymbol" placeholder="🌊 💫 ⚡ ou créez votre pixel art !" maxlength="5">
+                            <div class="emoji-picker">
+                                <button type="button" class="emoji-btn" onclick="setSymbol('🌐')">🌐</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('⚡')">⚡</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('💫')">💫</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('🔮')">🔮</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('🌊')">🌊</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('🔥')">🔥</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('💎')">💎</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('🚀')">🚀</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('✨')">✨</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('🎵')">🎵</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('🎨')">🎨</button>
+                                <button type="button" class="emoji-btn" onclick="setSymbol('🌙')">🌙</button>
+                            </div>
+                            <button type="button" class="toggle-pixel-creator" onclick="togglePixelCreator()">
+                                🎨 Créateur Pixel Art
+                            </button>
+                            
+                            <!-- Pixel Art Creator -->
+                            <div id="pixelCreator" class="pixel-creator hidden">
+                                <div class="pixel-creator-header">
+                                    <span class="pixel-creator-title">✨ Créez votre symbole pixel art (16x16)</span>
+                                </div>
+                                
+                                <div class="color-palette">
+                                    <div class="color-btn selected" style="background: #25f4ee;" onclick="selectColor('#25f4ee')"></div>
+                                    <div class="color-btn" style="background: #fe2c55;" onclick="selectColor('#fe2c55')"></div>
+                                    <div class="color-btn" style="background: #a033ff;" onclick="selectColor('#a033ff')"></div>
+                                    <div class="color-btn" style="background: #ffd700;" onclick="selectColor('#ffd700')"></div>
+                                    <div class="color-btn" style="background: #00ff00;" onclick="selectColor('#00ff00')"></div>
+                                    <div class="color-btn" style="background: #ff6600;" onclick="selectColor('#ff6600')"></div>
+                                    <div class="color-btn" style="background: #ffffff;" onclick="selectColor('#ffffff')"></div>
+                                    <div class="color-btn" style="background: #000000;" onclick="selectColor('#000000')"></div>
+                                </div>
+                                
+                                <div id="pixelGrid" class="pixel-grid"></div>
+                                
+                                <div class="pixel-preview">
+                                    <canvas id="pixelPreview" width="16" height="16"></canvas>
+                                </div>
+                                
+                                <div class="pixel-controls">
+                                    <button type="button" onclick="clearPixelArt()">🗑️ Effacer</button>
+                                    <button type="button" onclick="savePixelArt()">💾 Utiliser ce symbole</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Définition</label>
+                        <textarea id="newDefinition" placeholder="Définition du mot..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Synonymes (FR ou EN, séparés par des virgules)</label>
+                        <input type="text" id="newSynonyms" placeholder="ex: flux, stream, courant">
+                    </div>
+                    <button onclick="addWord()">Créer le Mot</button>
+                    <button onclick="askAIHelp()">🤖 Aide de l'IA</button>
+                    
+                    <div id="aiSuggestionBox" class="ai-suggestion hidden">
+                        <strong>💡 Suggestion de l'IA :</strong>
+                        <p id="aiSuggestionText"></p>
+                        <button onclick="applyAISuggestion()">Appliquer</button>
+                        <button onclick="closeAISuggestion()">Ignorer</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Words List -->
+            <div class="words-list">
+                <h2>📚 DICTIONNAIRE VIRTUEL</h2>
+                
+                <div class="dictionary-header">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="🔍 Rechercher un mot..." oninput="searchWords()">
+                    </div>
+                    
+                    <!-- Filters -->
+                    <div class="filters">
+                        <button class="filter-btn active" onclick="filterWords('all')">Tous</button>
+                        <button class="filter-btn" onclick="filterWords('mine')">Mes Mots</button>
+                        <button class="filter-btn" onclick="filterWords('Poétique')">Poétique</button>
+                        <button class="filter-btn" onclick="filterWords('Adulte')">Adulte</button>
+                        <button class="filter-btn" onclick="filterWords('Vulgaire')">Vulgaire</button>
+                        <button class="filter-btn" onclick="filterWords('Technique')">Technique</button>
+                    </div>
+                </div>
+
+                <div id="wordsList">
+                    <!-- Words will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🌐 La Langue d'Internet © 2026 | Créé par la communauté, pour la communauté</p>
+        </footer>
+    </div>
+
+    <script>
+        // State management
+        let currentUser = null;
+        let users = [];
+        let words = [];
+        let currentFilter = 'all';
+        let translationCount = 0;
+        let currentAISuggestion = null;
+        
+        // Pixel art state
+        let pixelGrid = [];
+        let currentColor = '#25f4ee';
+        let isDrawing = false;
+
+        // Initialize pixel grid
+        function initPixelGrid() {
+            const grid = document.getElementById('pixelGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            pixelGrid = [];
+            
+            for (let i = 0; i < 256; i++) { // 16x16 = 256
+                const cell = document.createElement('div');
+                cell.className = 'pixel-cell';
+                cell.dataset.index = i;
+                
+                cell.addEventListener('mousedown', () => {
+                    isDrawing = true;
+                    togglePixel(i);
+                });
+                
+                cell.addEventListener('mouseenter', () => {
+                    if (isDrawing) togglePixel(i);
+                });
+                
+                grid.appendChild(cell);
+                pixelGrid.push(null);
+            }
+            
+            document.addEventListener('mouseup', () => {
+                isDrawing = false;
+            });
+        }
+
+        function togglePixel(index) {
+            const cell = document.querySelector(`[data-index="${index}"]`);
+            if (pixelGrid[index] === currentColor) {
+                pixelGrid[index] = null;
+                cell.classList.remove('active');
+                cell.style.setProperty('--current-color', 'transparent');
+            } else {
+                pixelGrid[index] = currentColor;
+                cell.classList.add('active');
+                cell.style.setProperty('--current-color', currentColor);
+            }
+            updatePixelPreview();
+        }
+
+        function selectColor(color) {
+            currentColor = color;
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        function clearPixelArt() {
+            pixelGrid = new Array(256).fill(null);
+            document.querySelectorAll('.pixel-cell').forEach(cell => {
+                cell.classList.remove('active');
+            });
+            updatePixelPreview();
+        }
+
+        function updatePixelPreview() {
+            const canvas = document.getElementById('pixelPreview');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, 16, 16);
+            
+            for (let i = 0; i < 256; i++) {
+                if (pixelGrid[i]) {
+                    const x = i % 16;
+                    const y = Math.floor(i / 16);
+                    ctx.fillStyle = pixelGrid[i];
+                    ctx.fillRect(x, y, 1, 1);
+                }
+            }
+        }
+
+        function savePixelArt() {
+            const canvas = document.getElementById('pixelPreview');
+            const dataUrl = canvas.toDataURL('image/png');
+            
+            // Create a visual representation
+            const img = new Image();
+            img.src = dataUrl;
+            img.style.width = '32px';
+            img.style.height = '32px';
+            img.style.imageRendering = 'pixelated';
+            
+            // Store the data URL as the symbol
+            document.getElementById('newSymbol').value = dataUrl;
+            
+            alert('✨ Pixel art sauvegardé ! Il sera utilisé comme symbole pour votre mot.');
+            togglePixelCreator();
+        }
+
+        function togglePixelCreator() {
+            const creator = document.getElementById('pixelCreator');
+            if (creator.classList.contains('hidden')) {
+                creator.classList.remove('hidden');
+                initPixelGrid();
+            } else {
+                creator.classList.add('hidden');
+            }
+        }
+
+        // Load from storage
+        async function loadData() {
+            try {
+                const usersResult = await window.storage.get('users');
+                users = usersResult ? JSON.parse(usersResult.value) : [];
+                
+                const wordsResult = await window.storage.get('words');
+                words = wordsResult ? JSON.parse(wordsResult.value) : [];
+                
+                const currentUserResult = await window.storage.get('currentUser');
+                currentUser = currentUserResult ? JSON.parse(currentUserResult.value) : null;
+                
+                const translationsResult = await window.storage.get('translations');
+                translationCount = translationsResult ? parseInt(translationsResult.value) : 0;
+                
+                updateUI();
+            } catch (error) {
+                console.log('Initializing new storage');
+                users = [];
+                words = [];
+                currentUser = null;
+                translationCount = 0;
+                updateUI();
+            }
+        }
+
+        // Save to storage
+        async function saveData() {
+            try {
+                await window.storage.set('users', JSON.stringify(users));
+                await window.storage.set('words', JSON.stringify(words));
+                await window.storage.set('currentUser', JSON.stringify(currentUser));
+                await window.storage.set('translations', translationCount.toString());
+            } catch (error) {
+                console.error('Error saving data:', error);
+            }
+        }
+
+        // Authentication
+        function showRegister() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('registerSection').classList.remove('hidden');
+        }
+
+        function showLogin() {
+            document.getElementById('registerSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+        }
+
+        function register() {
+            const username = document.getElementById('registerUsername').value.trim();
+            const password = document.getElementById('registerPassword').value;
+
+            if (!username || !password) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+
+            if (users.find(u => u.username === username)) {
+                alert('Ce nom d\'utilisateur existe déjà');
+                return;
+            }
+
+            users.push({ username, password });
+            saveData();
+            alert('Compte créé avec succès ! Vous pouvez maintenant vous connecter.');
+            showLogin();
+            document.getElementById('registerUsername').value = '';
+            document.getElementById('registerPassword').value = '';
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (!user) {
+                alert('Nom d\'utilisateur ou mot de passe incorrect');
+                return;
+            }
+
+            currentUser = username;
+            saveData();
+            updateUI();
+        }
+
+        function logout() {
+            currentUser = null;
+            saveData();
+            updateUI();
+        }
+
+        // Word management
+        async function addWord() {
+            if (!currentUser) {
+                alert('Vous devez être connecté pour ajouter des mots');
+                return;
+            }
+
+            const word = document.getElementById('newWord').value.trim();
+            const symbol = document.getElementById('newSymbol').value.trim();
+            const definition = document.getElementById('newDefinition').value.trim();
+            const synonyms = document.getElementById('newSynonyms').value.trim();
+
+            if (!word || !definition) {
+                alert('Veuillez remplir au moins le mot et sa définition');
+                return;
+            }
+
+            // AI Classification
+            const category = await classifyWord(word, definition);
+
+            const newWord = {
+                id: Date.now(),
+                word,
+                symbol: symbol || '🌐',
+                definition,
+                synonyms,
+                category,
+                author: currentUser,
+                createdAt: new Date().toISOString()
+            };
+
+            words.push(newWord);
+            saveData();
+            
+            // Clear form
+            document.getElementById('newWord').value = '';
+            document.getElementById('newSymbol').value = '';
+            document.getElementById('newDefinition').value = '';
+            document.getElementById('newSynonyms').value = '';
+            
+            updateUI();
+            alert('Mot ajouté avec succès !');
+        }
+
+        async function classifyWord(word, definition) {
+            // Simulate AI classification
+            const text = (word + ' ' + definition).toLowerCase();
+            
+            if (text.includes('poésie') || text.includes('beauté') || text.includes('art')) {
+                return 'Poétique';
+            } else if (text.includes('sexe') || text.includes('adulte')) {
+                return 'Adulte';
+            } else if (text.includes('vulgaire') || text.includes('insulte')) {
+                return 'Vulgaire';
+            } else if (text.includes('tech') || text.includes('code') || text.includes('cyber')) {
+                return 'Technique';
+            } else {
+                return 'Général';
+            }
+        }
+
+        function editWord(id) {
+            const word = words.find(w => w.id === id);
+            if (!word || word.author !== currentUser) {
+                alert('Vous ne pouvez modifier que vos propres mots');
+                return;
+            }
+
+            const newDefinition = prompt('Nouvelle définition:', word.definition);
+            if (newDefinition) {
+                word.definition = newDefinition;
+                saveData();
+                updateUI();
+            }
+        }
+
+        function deleteWord(id) {
+            const word = words.find(w => w.id === id);
+            if (!word || word.author !== currentUser) {
+                alert('Vous ne pouvez supprimer que vos propres mots');
+                return;
+            }
+
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce mot ?')) {
+                words = words.filter(w => w.id !== id);
+                saveData();
+                updateUI();
+            }
+        }
+
+        // AI Help
+        async function askAIHelp() {
+            const definition = document.getElementById('newDefinition').value.trim();
+            
+            if (!definition) {
+                alert('Veuillez d\'abord écrire une définition');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('aiSuggestionBox').classList.remove('hidden');
+            document.getElementById('aiSuggestionText').innerHTML = '<div class="loading"></div> L\'IA réfléchit...';
+
+            try {
+                const response = await fetch("https://api.anthropic.com/v1/messages", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        model: "claude-sonnet-4-20250514",
+                        max_tokens: 1000,
+                        messages: [
+                            { 
+                                role: "user", 
+                                content: `Tu es un assistant linguistique créatif. Voici une définition pour un mot dans "La Langue d'Internet": "${definition}". 
+
+Propose une version plus courte et plus belle de cette définition (maximum 2 phrases, style poétique et impactant). Réponds uniquement avec la définition reformulée, sans introduction ni commentaire.` 
+                            }
+                        ],
+                    })
+                });
+
+                const data = await response.json();
+                const suggestion = data.content.find(item => item.type === "text")?.text || "Impossible de générer une suggestion.";
+                
+                currentAISuggestion = suggestion;
+                document.getElementById('aiSuggestionText').textContent = suggestion;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('aiSuggestionText').textContent = 'Erreur lors de la génération de la suggestion.';
+            }
+        }
+
+        function applyAISuggestion() {
+            if (currentAISuggestion) {
+                document.getElementById('newDefinition').value = currentAISuggestion;
+                closeAISuggestion();
+            }
+        }
+
+        function closeAISuggestion() {
+            document.getElementById('aiSuggestionBox').classList.add('hidden');
+            currentAISuggestion = null;
+        }
+
+        // Translation
+        async function translate() {
+            const input = document.getElementById('translatorInput').value.trim();
+            
+            if (!input) {
+                alert('Veuillez entrer une phrase à traduire');
+                return;
+            }
+
+            document.getElementById('translatorOutput').innerHTML = '<div class="loading"></div> Traduction en cours...';
+
+            // Build dictionary context
+            const dictionaryContext = words.map(w => 
+                `${w.synonyms ? w.synonyms.split(',').map(s => s.trim()).join(' / ') : ''} = ${w.word}`
+            ).join('\n');
+
+            try {
+                const response = await fetch("https://api.anthropic.com/v1/messages", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        model: "claude-sonnet-4-20250514",
+                        max_tokens: 1000,
+                        messages: [
+                            { 
+                                role: "user", 
+                                content: `Tu es un traducteur vers "La Langue d'Internet". Utilise ce dictionnaire pour traduire:
+
+DICTIONNAIRE:
+${dictionaryContext}
+
+Traduis cette phrase: "${input}"
+
+Règles:
+- Utilise les mots du dictionnaire quand possible
+- Sois créatif et poétique
+- Garde le sens original
+- Réponds uniquement avec la traduction, sans explication
+
+Traduction:` 
+                            }
+                        ],
+                    })
+                });
+
+                const data = await response.json();
+                const translation = data.content.find(item => item.type === "text")?.text || "Traduction impossible.";
+                
+                document.getElementById('translatorOutput').textContent = translation;
+                translationCount++;
+                saveData();
+                updateStats();
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('translatorOutput').textContent = 'Erreur lors de la traduction.';
+            }
+        }
+
+        // Filters
+        function filterWords(filter) {
+            currentFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            displayWords();
+        }
+
+        // Search
+        function searchWords() {
+            displayWords();
+        }
+
+        // Symbol picker
+        function setSymbol(emoji) {
+            document.getElementById('newSymbol').value = emoji;
+        }
+
+        // Display
+        function displayWords() {
+            const container = document.getElementById('wordsList');
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            let filteredWords = words;
+
+            if (currentFilter === 'mine') {
+                filteredWords = words.filter(w => w.author === currentUser);
+            } else if (currentFilter !== 'all') {
+                filteredWords = words.filter(w => w.category === currentFilter);
+            }
+
+            // Apply search filter
+            if (searchTerm) {
+                filteredWords = filteredWords.filter(w => 
+                    w.word.toLowerCase().includes(searchTerm) ||
+                    w.definition.toLowerCase().includes(searchTerm) ||
+                    (w.synonyms && w.synonyms.toLowerCase().includes(searchTerm))
+                );
+            }
+
+            if (filteredWords.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 3rem; font-size: 1.1rem;">Aucun mot trouvé. 🔍</p>';
+                return;
+            }
+
+            container.innerHTML = filteredWords.reverse().map(word => {
+                const symbol = word.symbol || '🌐';
+                const isPixelArt = symbol.startsWith('data:image');
+                const symbolHtml = isPixelArt 
+                    ? `<img src="${symbol}" alt="pixel art">` 
+                    : symbol;
+                
+                return `
+                    <div class="word-card">
+                        <div class="word-symbol">${symbolHtml}</div>
+                        <div class="word-header">
+                            <div class="word-title">${word.word}</div>
+                            <div class="word-tag">${word.category}</div>
+                        </div>
+                        <div class="word-definition">${word.definition}</div>
+                        ${word.synonyms ? `<div class="word-synonyms">Synonymes: ${word.synonyms}</div>` : ''}
+                        <div class="word-meta">
+                            <span class="word-author">Par ${word.author}</span>
+                            ${word.author === currentUser ? `
+                                <div class="word-actions">
+                                    <button class="btn-edit" onclick="editWord(${word.id})">Modifier</button>
+                                    <button class="btn-delete" onclick="deleteWord(${word.id})">Supprimer</button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats() {
+            document.getElementById('totalWords').textContent = words.length;
+            document.getElementById('totalUsers').textContent = users.length;
+            document.getElementById('totalTranslations').textContent = translationCount;
+        }
+
+        function updateUI() {
+            if (currentUser) {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('registerSection').classList.add('hidden');
+                document.getElementById('userSection').classList.remove('hidden');
+                document.getElementById('currentUsername').textContent = currentUser;
+            } else {
+                document.getElementById('loginSection').classList.remove('hidden');
+                document.getElementById('registerSection').classList.add('hidden');
+                document.getElementById('userSection').classList.add('hidden');
+            }
+
+            displayWords();
+            updateStats();
+        }
+
+        // Initialize
+        loadData();
+    </script>
+</body>
+</html>
